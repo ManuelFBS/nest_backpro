@@ -22,7 +22,7 @@ const configService = new ConfigService();
       entities: [User],
       database: configService.get('DB_NAME'),
       synchronize: true,
-      logging: true,
+      logging: false,
     }),
     UserModule,
   ],
