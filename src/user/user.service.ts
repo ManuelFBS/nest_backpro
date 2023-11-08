@@ -33,15 +33,25 @@ export class UserService {
     return await this.userRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findUser(id: number): Promise<User> {
+    return await this.userRepository.findOneBy({ id });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async updateUser(id: number, updateUserDto: UpdateUserDto) {
+    const user: User = new User();
+
+    user.name = updateUserDto.name;
+    user.age = updateUserDto.age;
+    user.email = updateUserDto.email;
+    user.username = updateUserDto.username;
+    user.password = updateUserDto.password;
+    user.gender = updateUserDto.gender;
+    user.id = id;
+
+    return await this.userRepository.save(user);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async removeUser(id: number): Promise<{ affected?: number }> {
+    return await this.userRepository.delete(id);
   }
 }
