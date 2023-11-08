@@ -36,6 +36,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsInt()
   age: number;
 
+  @IsOptional()
   @IsString()
   @IsEnum(['f', 'm'])
   gender: string;
