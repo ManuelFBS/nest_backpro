@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { UserService } from '../../user/user.service';
 import { User } from '../../user/entities/user.entity';
 import { PayLoadToken } from '../interfaces/auth.interface';
+
+const configService = new ConfigService();
 
 @Injectable()
 export class AuthService {
@@ -49,6 +52,15 @@ export class AuthService {
 
     const payload: PayLoadToken = {
       sub: getUser.id.toString(),
+    };
+
+    return {
+      accessToken: this.signJWT({
+        payload,
+        secret: configService.get('JWT_SECRET'),
+        expires: '2h',
+      }),
+      user,
     };
   }
 }
