@@ -17,25 +17,31 @@ export class UserService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    const user: User = new User();
+  async create(body: CreateUserDto): Promise<User> {
+    try {
+      body.password = await bcrypt.hash(body.password, process.env.HASH_JUMP);
+      return await this.userRepository.save(body);
+    } catch (error) {
+      throw error.message;
+    }
+    // const user: User = new User();
 
-    user.name = createUserDto.name;
-    user.age = createUserDto.age;
-    user.email = createUserDto.email;
-    user.username = createUserDto.username;
-    user.password = createUserDto.password;
-    user.gender = createUserDto.gender;
+    // user.name = createUserDto.name;
+    // user.age = createUserDto.age;
+    // user.email = createUserDto.email;
+    // user.username = createUserDto.username;
+    // user.password = createUserDto.password;
+    // user.gender = createUserDto.gender;
 
-    const newUser = await this.userRepository.create(user);
-    const encryptedPassword = await bcrypt.hash(
-      newUser.password,
-      process.env.HASH_JUMP,
-    );
+    // const newUser = await this.userRepository.create(user);
+    // const encryptedPassword = await bcrypt.hash(
+    //   newUser.password,
+    //   process.env.HASH_JUMP,
+    // );
 
-    newUser.password = encryptedPassword;
+    // newUser.password = encryptedPassword;
 
-    return await this.userRepository.save(newUser);
+    // return await this.userRepository.save(newUser);
   }
 
   async findAllUsers(): Promise<User[]> {
