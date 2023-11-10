@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { UserService } from '../../user/user.service';
+import { UserService } from '../../user/services/user.service';
 import { User } from '../../user/entities/user.entity';
 import { PayLoadToken } from '../interfaces/auth.interface';
 
