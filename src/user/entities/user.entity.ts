@@ -1,6 +1,9 @@
+import { Exclude } from 'class-transformer';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
+/* La clase Usuario es una clase TypeScript que representa un usuario con propiedades como
+identificación, nombre, nombre de usuario, correo electrónico, edad, contraseña y sexo. */
 export class User {
   /**
    * this decorator will help to auto generate id for the table.
@@ -20,6 +23,7 @@ export class User {
   @Column({ type: 'int' })
   age: number;
 
+  @Exclude()
   @Column({ type: 'varchar' })
   password: string;
 
