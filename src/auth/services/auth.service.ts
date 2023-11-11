@@ -58,7 +58,7 @@ export class AuthService {
       accessToken: this.signJWT({
         payload,
         secret: configService.get('JWT_SECRET'),
-        expires: '2h',
+        expires: '1h',
       }),
       user,
     };
