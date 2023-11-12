@@ -7,13 +7,16 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { AuthGuard } from '../../auth/guards/auth.guard';
+import { PublicAccess } from '../../auth/decorators/public.decorator';
 
-/* La clase UserController define rutas para manejar operaciones CRUD en entidades de usuario. */
 @Controller('user')
+@UseGuards(AuthGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -24,16 +27,13 @@ export class UserController {
     return await this.userService.create(createUserDto);
   }
 
-  /* El decorador `@Get()` se utiliza para definir una ruta HTTP GET en la clase `UserController`.
-  Especifica que esta ruta manejará las solicitudes GET al punto final `/user`. */
+  @PublicAccess()
   @Get()
   async findAll() {
     return await this.userService.findAllUsers();
   }
 
-  /* El fragmento de código `@Get(':id')` es un decorador que se utiliza para definir una ruta para
-  manejar solicitudes HTTP GET. Especifica que esta ruta manejará solicitudes GET al punto final
-  `/user/:id`, donde `:id` es un parámetro dinámico que representa el ID del usuario. */
+  @PublicAccess()
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return await this.userService.findUser(+id);

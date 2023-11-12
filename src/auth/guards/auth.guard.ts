@@ -25,9 +25,9 @@ export class AuthGuard implements CanActivate {
       context.getHandler(),
     );
 
-    if (isPublic) {
-      return true;
-    }
+    // if (isPublic) {
+    //   return true;
+    // }
 
     const req = context.switchToHttp().getRequest<Request>();
     const token = req.headers['nest_back'];
